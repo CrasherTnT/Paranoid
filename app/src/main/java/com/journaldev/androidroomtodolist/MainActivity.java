@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     };
 
     ArrayList<Todo> todoArrayList = new ArrayList<>();
-
     ArrayList<String> spinnerList = new ArrayList<>(Arrays.asList(categories));
 
     public static final int NEW_TODO_REQUEST_CODE = 200;
@@ -48,12 +47,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        checkIfAppLaunchedFirstTime();
-
         initViews();
-
-        myDatabase = Room.databaseBuilder(getApplicationContext(), MyDatabase.class, MyDatabase.DB_NAME).build();
-
+        myDatabase = Room.databaseBuilder(getApplicationContext(), MyDatabase.class, MyDatabase.DB_NAME).fallbackToDestructiveMigration().build();
+        checkIfAppLaunchedFirstTime();
         spinner.setOnItemSelectedListener(this);
         spinner.setSelection(0);
 
