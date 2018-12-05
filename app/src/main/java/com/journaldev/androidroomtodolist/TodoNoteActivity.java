@@ -2,15 +2,20 @@ package com.journaldev.androidroomtodolist;
 
 import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -21,13 +26,15 @@ public class TodoNoteActivity extends AppCompatActivity {
     Spinner spinner;
     EditText inTitle, inDesc;
     Button btnDone, btnDelete;
+    ImageView accountCreateLogo;
+    private BroadcastReceiver logoReceiver;
     boolean isNewTodo = false;
 
     private String[] categories = {
-            "Android",
-            "iOS",
-            "Kotlin",
-            "Swift"
+            "Facebook",
+            "Google",
+            "Yahoo",
+            "STI ELMS"
     };
 
     public ArrayList<String> spinnerList = new ArrayList<>(Arrays.asList(categories));
@@ -47,6 +54,8 @@ public class TodoNoteActivity extends AppCompatActivity {
         inDesc = findViewById(R.id.inDescription);
         btnDone = findViewById(R.id.btnDone);
         btnDelete = findViewById(R.id.btnDelete);
+        accountCreateLogo = findViewById(R.id.accountCreateLogo);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -88,6 +97,39 @@ public class TodoNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deleteRow(updateTodo);
+            }
+        });
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String spinnerValue = spinner.getSelectedItem().toString();
+                switch (spinnerValue){
+                    case("Facebook"):
+                        accountCreateLogo.setImageResource(R.drawable.fb);
+                        break;
+                    case("Google"):
+                        accountCreateLogo.setImageResource(R.drawable.google);
+                        break;
+                    case("Yahoo"):
+                        accountCreateLogo.setImageResource(R.drawable.yahoo);
+                        break;
+                    case("STI ELMS"):
+                        accountCreateLogo.setImageResource(R.drawable.sti);
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                accountCreateLogo.setImageResource(R.drawable.error);
             }
         });
     }
@@ -156,7 +198,6 @@ public class TodoNoteActivity extends AppCompatActivity {
         }.execute(todo);
 
     }
-
 
     @SuppressLint("StaticFieldLeak")
     private void updateRow(Todo todo) {
