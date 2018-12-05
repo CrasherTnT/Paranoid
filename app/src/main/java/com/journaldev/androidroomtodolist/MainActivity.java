@@ -29,10 +29,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     FloatingActionButton floatingActionButton;
     private String[] categories = {
             "All",
-            "Android",
-            "iOS",
-            "Kotlin",
-            "Swift"
+            "Facebook",
+            "Google",
+            "Yahoo",
+            "STI ELMS"
     };
 
     ArrayList<Todo> todoArrayList = new ArrayList<>();

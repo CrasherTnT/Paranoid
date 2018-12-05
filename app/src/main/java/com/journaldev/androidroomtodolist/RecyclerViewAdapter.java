@@ -2,9 +2,11 @@ package com.journaldev.androidroomtodolist;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -32,9 +34,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(RecyclerViewAdapter.ViewHolder holder, int position) {
         Todo todo = todoList.get(position);
         holder.txtName.setText(todo.name);
-        holder.txtNo.setText("#" + String.valueOf(todo.todo_id));
-        holder.txtDesc.setText(todo.description);
+        //holder.txtDesc.setText("Note: ");
         holder.txtCategory.setText(todo.category);
+
+        switch (todo.category){
+            case "Facebook":
+                holder.accountLogo.setImageResource(R.drawable.fb);
+                break;
+            case "Google":
+                holder.accountLogo.setImageResource(R.drawable.google);
+                break;
+            case "Yahoo":
+                holder.accountLogo.setImageResource(R.drawable.yahoo);
+                break;
+            case "STI ELMS":
+                holder.accountLogo.setImageResource(R.drawable.sti);
+                break;
+            default:
+                holder.accountLogo.setImageResource(R.drawable.error);
+                break;
+        }
+
 
     }
 
@@ -58,7 +78,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView txtName;
-        public TextView txtNo;
+        public ImageView accountLogo;
         public TextView txtDesc;
         public TextView txtCategory;
         public CardView cardView;
@@ -66,9 +86,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ViewHolder(View view) {
             super(view);
 
-            txtNo = view.findViewById(R.id.txtNo);
+            accountLogo = view.findViewById(R.id.accountLogo);
             txtName = view.findViewById(R.id.txtName);
-            txtDesc = view.findViewById(R.id.txtDesc);
+            //txtDesc = view.findViewById(R.id.txtDesc);
             txtCategory = view.findViewById(R.id.txtCategory);
             cardView = view.findViewById(R.id.cardView);
             cardView.setOnClickListener(new View.OnClickListener() {
